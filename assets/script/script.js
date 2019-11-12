@@ -64,7 +64,7 @@ $("#submit").on("click", function(){
     var food = $("#food").val(); 
 
     //Set the Edamam queryURL
-    var queryURL = "https://api.edamam.com/api/food-database/parser?ingr="+ food + "&category=fast-foods&app_id=f6a7e516&app_key=d2d2590ec9988c392da648e07513249d";
+    var queryURL = "https://api.edamam.com/api/food-database/parser?ingr="+ food + "&from = 50&category=fast-foods&app_id=f6a7e516&app_key=d2d2590ec9988c392da648e07513249d";
 
  
 //Function to call the ajax    
@@ -119,11 +119,12 @@ function initMap(){
    
   //Loop through all the items on the restaurantArr to put markers
   for (i = 0; i < restaurantArr.length; i++){
+    console.log(restaurantArr.length);
       
       //The request specifications for google maps search
       var request = {
       query: restaurantArr[i],
-      fields: ['name', 'geometry'],
+      fields: ['name','geometry'],
       
     }; 
     console.log(restaurantArr[i]);
@@ -134,6 +135,7 @@ function initMap(){
   
     //Function to request information using .findPlaceFromQuery
     service.findPlaceFromQuery(request, function(results, status) {
+      console.log(results);
       if (status === google.maps.places.PlacesServiceStatus.OK) {
         for (var i = 0; i < results.length; i++) {
           createMarker(results[i]);
