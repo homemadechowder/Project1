@@ -1,5 +1,7 @@
 //EDAMAM Api Key = d2d2590ec9988c392da648e07513249d
 
+//Zomato Api = https://developers.zomato.com/api/v2.1/cities?lat=1&lon=2&count=3
+
 //Firebase******************************************************************
  // Your web app's Firebase configuration
  var firebaseConfig = {
@@ -19,6 +21,8 @@ firebase.initializeApp(firebaseConfig);
 
 //INITIAL VARIABLES*********************************************************
 var restaurantArr = [];
+var cityName;
+var cityId;
 var lat;
 var lng;
 var x = document.getElementById("map");
@@ -57,22 +61,58 @@ $(document).ready(function(){
 //on click function for submit
 $("#submit").on("click", function(){
    
-    
     console.log("clicked");
-    
     //Get input for the food type
     var food = $("#food").val(); 
-
     //Set the Edamam queryURL
-    var queryURL = "https://api.edamam.com/api/food-database/parser?ingr="+ food + "&from = 50&category=fast-foods&app_id=f6a7e516&app_key=d2d2590ec9988c392da648e07513249d";
+    // var queryURL = "https://api.edamam.com/api/food-database/parser?ingr="+ food + "&from = 50&category=fast-foods&app_id=f6a7e516&app_key=d2d2590ec9988c392da648e07513249d";
+    var queryURL_city = "https://developers.zomato.com/api/v2.1/locations?lat="+lat +"&lon="+lng;
+    var queryURL_food = "https://api.edamam.com/api/food-database/parser?ingr="+ food + "&app_id=f6a7e516&app_key=d2d2590ec9988c392da648e07513249d";
+    var queryURL_recipe = "https://api.edamam.com/search?q="+ food + "&app_id=f6a7e516&app_key=d2d2590ec9988c392da648e07513249d";
+
 
  
 //Function to call the ajax    
+// function
+
+
+  
+
+  //Function calls
+  getCity();
+  ajax();
+  ajax_recipe();
+  initMap();
+  
+});
+
+//AJAX REQUESTS************************************************************
+
+function getCity(){
+  $.ajax({
+    url: queryURL_city,
+    method: "GET",
+    beforeSend: function(xhr){xhr.setRequestHeader('user-key', "a7fa6325161097eb1463d89abfbf98f8");
+    }
+  })
+  .then(function(response){
+    console.log(response);
+    cityName = response.location_suggestions[0].city_name;
+    cityId = response.location_suggestions[0].city_id;
+    console.log(cityName);
+
+    $("#city").text(cityName);
+  
+  })
+}
+
+
+
 function ajax(){
     
   //Ajax Request
     $.ajax({
-      url: queryURL,
+      url: queryURL_food,
       method: "GET"
     })
    
@@ -89,17 +129,29 @@ function ajax(){
       // console.log("Restaurant" +i + ": " + restaurantName);
       // console.log("Name of Dish " + i + ": " + itemName);
        
-      }
       console.log(response);
-      
-   });
+      }
 
+      })
 }
-  //Function calls
-  ajax();
-  initMap();
-  
-});
+
+function ajax_recipe(){
+  $.ajax({
+    url: queryURL_recipe,
+    method: "GET"
+  })
+ 
+  //Response handler
+ .then(function(response) {
+    
+     
+     console.log(response)
+     
+  })
+}
+
+//****************************************************************************
+
 // $("#mapObj").attr("src", "https://maps.googleapis.com/maps/api/js?key=AIzaSyBI7n0cKjaMhAdWPnXVmN8GpuFU5xiDahg&callback=initMap&libraries=places");
 })
 //*************************************************************************
