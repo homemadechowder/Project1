@@ -126,7 +126,7 @@ function ajax(){
 }
 
 function ajax_getDetail(){
-  
+
 }
 
 function ajax_recipe(){
@@ -147,9 +147,9 @@ function ajax_recipe(){
 });
 //****************************************************************************
 
-// $("#mapObj").attr("src", "https://maps.googleapis.com/maps/api/js?key=AIzaSyBI7n0cKjaMhAdWPnXVmN8GpuFU5xiDahg&callback=initMap&libraries=places");
+
 })
-//*************************************************************************
+
 
 //MAP INITIALIZING*********************************************************
 function initMap(){
