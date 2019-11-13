@@ -22,6 +22,7 @@ firebase.initializeApp(firebaseConfig);
 //INITIAL VARIABLES*********************************************************
 var restaurantArr = [];
 var itemNameArr = [];
+var recipeArr = [];
 var cityName;
 var cityId;
 var lat;
@@ -60,6 +61,7 @@ $(document).ready(function(){
   
 //on click function for submit
 $("#submit").on("click", function(){
+  $("#recipes").empty();
   console.log("clicked");
   //Get input for the food type
   var food = $("#food").val(); 
@@ -72,8 +74,8 @@ $("#submit").on("click", function(){
   
   //Function calls
   getCity();
-  // ajax();
-  ajax_search();
+  ajax();
+  //ajax_search();
   ajax_recipe();
   initMap();
 
@@ -167,9 +169,29 @@ function ajax_recipe(){
  
   //Response handler
  .then(function(response) {
+    
+    
         
-     console.log(response)
-     
+    for(i = 0; i < 20; i++){
+    var recipeName = response.hits[i].recipe.label; 
+    var recipeURL = response.hits[i].recipe.url;
+    var recipeImage = response.hits[i].recipe.image;
+    var num = parseInt(i) + 1;
+    var nameDisp = "<p> Recipe " + num + ": <strong>"+recipeName;
+    var urlDisp = "<p><a href = '"+recipeURL+"'>" + recipeURL;
+    var imageDisp =  "<p><img src='"+recipeImage+"' alt='"+recipeName+"'>";
+
+
+    console.log(response)
+    
+    $("#recipes").append(nameDisp + urlDisp + imageDisp);
+    recipeArr.push(recipeName);
+
+    database.ref().set({
+      recipeArr: recipeArr      
+    })
+
+    }
   })
 } 
 });
