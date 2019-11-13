@@ -21,6 +21,7 @@ firebase.initializeApp(firebaseConfig);
 
 //INITIAL VARIABLES*********************************************************
 var restaurantArr = [];
+var itemNameArr = [];
 var cityName;
 var cityId;
 var lat;
@@ -64,13 +65,15 @@ $("#submit").on("click", function(){
   var food = $("#food").val(); 
   //Set the Edamam queryURL
   // var queryURL = "https://api.edamam.com/api/food-database/parser?ingr="+ food + "&from = 50&category=fast-foods&app_id=f6a7e516&app_key=d2d2590ec9988c392da648e07513249d";
-  var queryURL_city = "https://developers.zomato.com/api/v2.1/locations?lat="+lat +"&lon="+lng;
-  var queryURL_food = "https://api.edamam.com/api/food-database/parser?ingr="+ food + "&category=fast-foods&app_id=f6a7e516&app_key=d2d2590ec9988c392da648e07513249d";
-  var queryURL_recipe = "https://api.edamam.com/search?q="+ food + "&app_id=f6a7e516&app_key=d2d2590ec9988c392da648e07513249d";
+  var queryURL_city = "https://developers.zomato.com/api/v2.1/locations?lat="+lat+"&lon="+lng;
+  var queryURL_food = "https://api.edamam.com/api/food-database/parser?ingr="+food+"&category=fast-foods&app_id=f6a7e516&app_key=d2d2590ec9988c392da648e07513249d";
+  var queryURL_recipe = "https://api.edamam.com/search?q="+food+"&app_id=f6a7e516&app_key=d2d2590ec9988c392da648e07513249d";
+  var queryURL_search = "https://developers.zomato.com/api/v2.1/search?lat="+lat+"&lon="+lng+"&radius=2000&sort=real_distance";
   
   //Function calls
   getCity();
-  ajax();
+  // ajax();
+  ajax_search();
   ajax_recipe();
   initMap();
 
@@ -109,6 +112,7 @@ function ajax(){
     //Response handler
    .then(function(response) {
       restaurantArr = [];
+      itemNameArr = [];
       
       for (i = 1; i < 20; i++){
       var restaurantName = response.hints[i].food.brand;
@@ -116,18 +120,42 @@ function ajax(){
       
       //Add the new restaurant onto the restaurant array used later in google maps api to output restaurant markers onto the map interface
       restaurantArr.push(restaurantName);
-      console.log("Restaurant" +i + ": " + restaurantName);
+      itemNameArr.push(itemName);
+      console.log("Restaurant" + i + ": " + restaurantName);
       console.log("Name of Dish " + i + ": " + itemName);  
       
       database.ref().set({
-        restaurantName: restaurantArr + " " + itemName
+        restaurantName: restaurantArr,
+        itemName: itemNameArr
 
       });
-      }
-      })
+    }
+    })
 }
 
-function ajax_getDetail(){
+function ajax_search(){
+  $.ajax({
+    url: queryURL_search,
+    method: "GET",
+    beforeSend: function(xhr){xhr.setRequestHeader('user-key', "a7fa6325161097eb1463d89abfbf98f8");
+  }
+  })
+ 
+  //Response handler
+ .then(function(response) {
+    restaurantArr = []; 
+    
+    for (i = 0; i < 20; i++){
+    var restaurantName = response.restaurants[i].restaurant.name; 
+    console.log(response);
+    restaurantArr.push(restaurantName);
+
+    database.ref().set({
+      restaurantName: restaurantArr
+
+    });
+    }
+  })
 
 }
 
