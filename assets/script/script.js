@@ -38,10 +38,9 @@ function getLocation() {
       x.innerHTML = "Geolocation is not supported by this browser.";
     }
    
-  }
+}
 
-  
-  function showPosition(position) {
+function showPosition(position) {
     // x.innerHTML = "Latitude: " + position.coords.latitude + 
     // "<br>Longitude: " + position.coords.longitude;
 
@@ -75,8 +74,11 @@ $("#submit").on("click", function(){
   ajax_recipe();
   initMap();
 
+
+database.ref().on("value", function(snapshot) {
+});
+
 //AJAX REQUESTS************************************************************
-  
 function getCity(){
   $.ajax({
     url: queryURL_city,
@@ -95,8 +97,6 @@ function getCity(){
   
   })
 }
-
-
 
 function ajax(){
     
@@ -117,11 +117,13 @@ function ajax(){
       //Add the new restaurant onto the restaurant array used later in google maps api to output restaurant markers onto the map interface
       restaurantArr.push(restaurantName);
       console.log("Restaurant" +i + ": " + restaurantName);
-      console.log("Name of Dish " + i + ": " + itemName);
-       
-     
-      }
+      console.log("Name of Dish " + i + ": " + itemName);  
+      
+      database.ref().set({
+        restaurantName: restaurantArr + " " + itemName
 
+      });
+      }
       })
 }
 
@@ -137,49 +139,33 @@ function ajax_recipe(){
  
   //Response handler
  .then(function(response) {
-    
-     
+        
      console.log(response)
      
   })
-}
-  
+} 
 });
-//****************************************************************************
-
-
 })
-
 
 //MAP INITIALIZING*********************************************************
 function initMap(){
     //Using the information received from the broswer of your current location, set a location parameter for google maps api
     var location = new google.maps.LatLng(lat, lng);
-    
     infowindow = new google.maps.InfoWindow();
-  
     //Set it so it is centered on your current location
     map = new google.maps.Map(
-        document.getElementById('map'), {center: location, zoom: 10});
-  
-    
-   
+        document.getElementById('map'), {center: location, zoom: 10});   
   //Loop through all the items on the restaurantArr to put markers
   for (i = 0; i < restaurantArr.length; i++){
-    console.log(restaurantArr.length);
-      
+    console.log(restaurantArr.length);    
       //The request specifications for google maps search
       var request = {
       query: restaurantArr[i],
-      fields: ['name','geometry'],
-      
+      fields: ['name','geometry'],     
     }; 
-    console.log(restaurantArr[i]);
-    
-     
+    console.log(restaurantArr[i]);      
     //Initialize places service from Google Maps API
-    var service = new google.maps.places.PlacesService(map);
-  
+    var service = new google.maps.places.PlacesService(map);  
     //Function to request information using .findPlaceFromQuery
     service.findPlaceFromQuery(request, function(results, status) {
       console.log(results);
