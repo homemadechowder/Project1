@@ -180,8 +180,6 @@ function ajax_recipe(){
     var nameDisp = "<p> Recipe " + num + ": <strong>"+recipeName;
     var urlDisp = "<p><a href = '"+recipeURL+"'>" + recipeURL;
     var imageDisp =  "<p><img src='"+recipeImage+"' alt='"+recipeName+"'>";
-
-
     console.log(response)
     
     $("#recipes").append(nameDisp + urlDisp + imageDisp);
@@ -206,18 +204,20 @@ function initMap(){
     map = new google.maps.Map(
         document.getElementById('map'), {center: location, zoom: 10});   
   //Loop through all the items on the restaurantArr to put markers
-  for (i = 0; i < restaurantArr.length; i++){
+  // for (i = 0; i < restaurantArr.length; i++){
     console.log(restaurantArr.length);    
       //The request specifications for google maps search
-      var request = {
-      query: restaurantArr[i],
-      fields: ['name','geometry'],     
-    }; 
-    console.log(restaurantArr[i]);      
+    var request = {
+      location: location,
+      query: 'grocery',
+      fields: ['name','geometry']     
+    };
+     
     //Initialize places service from Google Maps API
     var service = new google.maps.places.PlacesService(map);  
-    //Function to request information using .findPlaceFromQuery
-    service.findPlaceFromQuery(request, function(results, status) {
+    //Function to request information using .textSearch
+    
+    service.textSearch(request, function(results, status) {
       console.log(results);
       if (status === google.maps.places.PlacesServiceStatus.OK) {
         for (var i = 0; i < results.length; i++) {
@@ -227,7 +227,7 @@ function initMap(){
         map.setCenter(results[0].geometry.location);
       }
     });
-}
+// }
 }
   
 //Create Marker
