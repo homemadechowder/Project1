@@ -88,11 +88,14 @@ $("#submit").on("click", function(){
 database.ref().on("value", function(snapshot) {
 });
 
-function generateSlide(pic){
-  
-  
+function generateSlide(pic, name, link, carbs, calories, fat, protein){
+ 
   var slide = $("<div>");
   slide.addClass("carousel-item");
+  slide.attr("carbs", carbs);
+  slide.attr("calories", calories);
+  slide.attr("fat", fat);
+  slide.attr("protein", protein);
   
   var imgSlide = $("<img>");
   imgSlide.addClass("d-block w-100");
@@ -101,7 +104,16 @@ function generateSlide(pic){
   slide.append(imgSlide);
   $(".carousel-inner").append(slide);
 
+  var caption = $("<div>");
+  var captionh5 = $("<h5>");
+  captionh5.text(name);
+  var captionP = $("<p>");
+  captionP.addClass("link");
+  captionP.html("<a href = "+ link +" target = "+ link +" >Link to Recipe</a>");
+  caption.addClass("carousel-caption");
+  caption.append(captionh5).append(captionP);
 
+  slide.append(caption);
 }
 
 //AJAX REQUESTS************************************************************
@@ -124,32 +136,6 @@ function getCity(){
   })
 }
 
-function ajax_search(){
-  $.ajax({
-    url: queryURL_search,
-    method: "GET",
-    beforeSend: function(xhr){xhr.setRequestHeader('user-key', "a7fa6325161097eb1463d89abfbf98f8");
-  }
-  })
- 
-  //Response handler
- .then(function(response) {
-    restaurantArr = []; 
-    
-    for (i = 0; i < 20; i++){
-    var restaurantName = response.restaurants[i].restaurant.name; 
-    console.log(response);
-    restaurantArr.push(restaurantName);
-
-    database.ref().set({
-      restaurantName: restaurantArr
-
-    });
-    }
-  })
-
-}
-
 function ajax_recipe(){
   $.ajax({
     url: queryURL_recipe,
@@ -160,14 +146,19 @@ function ajax_recipe(){
  .then(function(response) {
     for(i = 0; i < 20; i++){
     console.log(response);
-    var recipeName = response.hits[i].recipe.label; 
+    var recipeName = response.hits[i].recipe.label;
     var recipeURL = response.hits[i].recipe.url;
     var recipeImage = response.hits[i].recipe.image;
     
     var recipeIngr = response.hits[i].recipe.ingredientLines;
-    var recipeNutr= response.hits[i].recipe.totalNutrients;
-    
+    var recipeNutr = response.hits[i].recipe.totalNutrients;
 
+    var carbs = "Carbohydrates: " + recipeNutr.CHOCDF.quantity + "g";
+    var calories = "Calories: " + recipeNutr.ENERC_KCAL.quantity + "kcal";
+    var fat = "Fat: " + recipeNutr.FAT.quantity + "g";
+    var protein = "Protein: " + recipeNutr.PROCNT.quantity + "g";
+
+    
     //Generating a button
     // var button = $('<button>');
     // button.addClass("recipeLink");
@@ -176,13 +167,9 @@ function ajax_recipe(){
     // button.attr("link", recipeURL);
     // button.attr("image", recipeImage)
 
-    generateSlide(recipeImage);
-
-       nameDisp  = recipeName;
-    console.log(nameDisp);
-    console.log("link " + recipeURL);
-    urlDisp   = "<a href = "+recipeURL+" target = "+ recipeURL +" >"+recipeName+" </a><br>";
-    var imageDisp = "<p> <img class = 'recipeImg' src='" + recipeImage + "' alt='" + recipeName + "'>";   
+    generateSlide(recipeImage, recipeName, recipeURL, carbs, calories, fat, protein); 
+    console.log(recipeIngr);
+    console.log(recipeNutr);
     // button.text(nameDisp);  
     
     // $("#recipes").append(button);
@@ -194,28 +181,25 @@ function ajax_recipe(){
     
   })
 }
-});
-
-
-
-
 })
-$(document).on("click", ".recipeLink", function(){
+})
+$(document).on("click", ".carousel-item", function(){
   console.log($(this));
   
-  var name = $(this).attr("name");
-  var link = $(this).attr("link");
-  var image = $(this).attr("image");
+  $(".nutCard").empty();
+  var nut = $("<div>");
+  nut.addClass("nutCard");
+  var nutCarb =  $((this)).attr("carbs");
+  var nutCal = $((this)).attr("calories");
+  var nutFat = $((this)).attr("fat");
+  var nutProtein = $((this)).attr("protein");
 
-  var urlLink = "<div><a href = "+ link + " target = "+ link + "></a>";
-  console.log(urlLink);
+  $(".showcase_card").append(nut);
+  nut.append(nutCarb).append(nutCal).append(nutFat).append(nutProtein);
 
+
+ 
   
-  console.log(name);
-  $("#recipes").empty();
-  $("#recipes").append("<br><h1>"+name);
-  $("#recipes").append("<img id = 'foodImg' src = " + image + " alt = image>");
-  $("#recipes").append("<div id = 'foodURL'><a href = "+ link + " target = "+ link + ">Link</a>");
 })
 
 //MAP INITIALIZING*********************************************************
@@ -226,10 +210,7 @@ function initMap(){
     //Set it so it is centered on your current location
     map = new google.maps.Map(
         document.getElementById('map'), {center: location, zoom: 12.5});   
-  //Loop through all the items on the restaurantArr to put markers
-  // for (i = 0; i < restaurantArr.length; i++){
-    console.log(restaurantArr.length);    
-      //The request specifications for google maps search
+    //The request specifications for google maps search
     var request = {
       location: location,
       query: 'grocery',
