@@ -88,15 +88,15 @@ $("#submit").on("click", function(){
 database.ref().on("value", function(snapshot) {
 });
 
-function generateSlide(pic, name, link, carbs, calories, fat, protein){
+function generateSlide(pic, name, link, calories, fat, protein){
  
   
   // $(".carousel-inner").append("<div class = 'carousel-item active'>").append()
 
   var slide = $("<div>");
   slide.addClass("carousel-item");
-  slide.attr("flag", "1")
-  slide.attr("carbs", carbs);
+  slide.attr("flag", "1");
+  // slide.attr("carbs", carbs);
   slide.attr("calories", calories);
   slide.attr("fat", fat);
   slide.attr("protein", protein);
@@ -148,6 +148,7 @@ function ajax_recipe(){
  
   //Response handler
  .then(function(response) {
+    
     for(i = 0; i < 20; i++){
     console.log(response);
     var recipeName = response.hits[i].recipe.label;
@@ -156,9 +157,20 @@ function ajax_recipe(){
     
     var recipeIngr = response.hits[i].recipe.ingredientLines;
     var recipeNutr = response.hits[i].recipe.totalNutrients;
+    var carbs;
 
-    var carbs = "Carbohydrates: " + recipeNutr.CHOCDF.quantity + "g";
-    console.log(carbs);
+    // if (recipeNutr.CHOCDF == "undefined"){
+    //   console.log("nocarbs");
+    //   carbs = "No Carbs";
+    // console.log(carbs);
+    // }
+    // else{
+      
+    //   carbs = "Carbohydrates: " + recipeNutr.CHOCDF.quantity + "g";
+    // }
+
+    // console.log(recipeNutr.CHOCDF);
+
     var calories = "Calories: " + recipeNutr.ENERC_KCAL.quantity + "kcal";
     var fat = "Fat: " + recipeNutr.FAT.quantity + "g";
     var protein = "Protein: " + recipeNutr.PROCNT.quantity + "g";
@@ -172,7 +184,7 @@ function ajax_recipe(){
     // button.attr("link", recipeURL);
     // button.attr("image", recipeImage)
 
-    generateSlide(recipeImage, recipeName, recipeURL, carbs, calories, fat, protein); 
+    generateSlide(recipeImage, recipeName, recipeURL, calories, fat, protein); 
     console.log(recipeIngr);
     console.log(recipeNutr);
     // button.text(nameDisp);  
