@@ -71,10 +71,10 @@ $("#submit").on("click", function(){
   var queryURL_food = "https://api.edamam.com/api/food-database/parser?ingr="+food+"&category=fast-foods&app_id=f6a7e516&app_key=d2d2590ec9988c392da648e07513249d";
   var queryURL_recipe = "https://api.edamam.com/search?q="+food+"&app_id=f6a7e516&app_key=d2d2590ec9988c392da648e07513249d";
   var queryURL_search = "https://developers.zomato.com/api/v2.1/search?lat="+lat+"&lon="+lng+"&radius=2000&sort=real_distance";
+  var queryURL_nutrition = 
   
   //Function calls
   getCity();
-  ajax();
   //ajax_search();
   ajax_recipe();
   initMap();
@@ -98,41 +98,9 @@ function getCity(){
     cityId = response.location_suggestions[0].city_id;
     console.log(cityName);
 
-    $("#city").text(cityName);
+    $("#city").text("You are located in: " + cityName);
   
   })
-}
-
-function ajax(){
-    
-  //Ajax Request
-    $.ajax({
-      url: queryURL_food,
-      method: "GET"
-    })
-   
-    //Response handler
-   .then(function(response) {
-      restaurantArr = [];
-      itemNameArr = [];
-      
-      for (i = 1; i < 20; i++){
-      var restaurantName = response.hints[i].food.brand;
-      var itemName = response.hints[i].food.label;
-      
-      //Add the new restaurant onto the restaurant array used later in google maps api to output restaurant markers onto the map interface
-      restaurantArr.push(restaurantName);
-      itemNameArr.push(itemName);
-      console.log("Restaurant" + i + ": " + restaurantName);
-      console.log("Name of Dish " + i + ": " + itemName);  
-      
-      database.ref().set({
-        restaurantName: restaurantArr,
-        itemName: itemNameArr
-
-      });
-    }
-    })
 }
 
 function ajax_search(){
@@ -169,13 +137,13 @@ function ajax_recipe(){
  
   //Response handler
  .then(function(response) {
-    
-    
-        
     for(i = 0; i < 20; i++){
     var recipeName = response.hits[i].recipe.label; 
     var recipeURL = response.hits[i].recipe.url;
     var recipeImage = response.hits[i].recipe.image;
+    var recipeIngr = response.hits[i].recipe.ingredientLines;
+    var recipeNutr= response.hits[i].recipe.totalNutrients;
+
     var num = parseInt(i) + 1;
     var nameDisp = "<p> Recipe " + num + ": <strong>"+recipeName;
     var urlDisp = "<p><a href = '"+recipeURL+"'>" + recipeURL;
