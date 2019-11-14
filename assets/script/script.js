@@ -71,7 +71,7 @@ $("#submit").on("click", function(){
   var queryURL_food = "https://api.edamam.com/api/food-database/parser?ingr="+food+"&category=fast-foods&app_id=f6a7e516&app_key=d2d2590ec9988c392da648e07513249d";
   var queryURL_recipe = "https://api.edamam.com/search?q="+food+"&app_id=f6a7e516&app_key=d2d2590ec9988c392da648e07513249d";
   var queryURL_search = "https://developers.zomato.com/api/v2.1/search?lat="+lat+"&lon="+lng+"&radius=2000&sort=real_distance";
-  var queryURL_nutrition = 
+  var queryURL_nutrition = "";
   
   //Function calls
   getCity();
@@ -145,12 +145,14 @@ function ajax_recipe(){
     var recipeNutr= response.hits[i].recipe.totalNutrients;
 
     var num = parseInt(i) + 1;
-    var nameDisp = "<p> Recipe " + num + ": <strong>"+recipeName;
-    var urlDisp = "<p><a href = '"+recipeURL+"'>" + recipeURL;
-    var imageDisp =  "<p><img src='"+recipeImage+"' alt='"+recipeName+"'>";
+    var nameDisp  =  "<a href = "+recipeURL+" target = "+ recipeURL +" >Recipe "+num+": " +recipeName+" </a>";
+    console.log(nameDisp);
+    console.log("link " + recipeURL);
+    // var urlDisp   = "<p> <a href = '" + recipeURL + "'>";
+    var imageDisp = "<p> <img class = 'recipeImg' src='" + recipeImage + "' alt='" + recipeName + "'>";
     console.log(response)
     
-    $("#recipes").append(nameDisp + urlDisp + imageDisp);
+    $("#recipes").append("<br>" + nameDisp);
     recipeArr.push(recipeName);
 
     database.ref().set({
@@ -170,7 +172,7 @@ function initMap(){
     infowindow = new google.maps.InfoWindow();
     //Set it so it is centered on your current location
     map = new google.maps.Map(
-        document.getElementById('map'), {center: location, zoom: 10});   
+        document.getElementById('map'), {center: location, zoom: 12.5});   
   //Loop through all the items on the restaurantArr to put markers
   // for (i = 0; i < restaurantArr.length; i++){
     console.log(restaurantArr.length);    

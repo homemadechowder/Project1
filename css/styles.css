@@ -23,7 +23,14 @@ body {
   background-color: #f7f7f7;
   box-shadow: 0 1rem 2rem .3rem #0000005b;
 }
-
+#recipes{
+  text-align: left;
+  font-size: 150%;
+}
+.recipeImg{
+  height: 200px;
+  width: 200px;
+}
 .header {
   height: 300rem;
   height: 40rem;
