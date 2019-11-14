@@ -65,7 +65,7 @@ $(document).ready(function(){
   
 //on click function for submit
 $("#submit").on("click", function(){
-  $("#recipes").empty();
+  // $("[flag = '1']").empty();
   //Get input for the food type
   var food = $("#food").val(); 
   //Set the Edamam queryURL
@@ -90,8 +90,12 @@ database.ref().on("value", function(snapshot) {
 
 function generateSlide(pic, name, link, carbs, calories, fat, protein){
  
+  
+  // $(".carousel-inner").append("<div class = 'carousel-item active'>").append()
+
   var slide = $("<div>");
   slide.addClass("carousel-item");
+  slide.attr("flag", "1")
   slide.attr("carbs", carbs);
   slide.attr("calories", calories);
   slide.attr("fat", fat);
@@ -154,6 +158,7 @@ function ajax_recipe(){
     var recipeNutr = response.hits[i].recipe.totalNutrients;
 
     var carbs = "Carbohydrates: " + recipeNutr.CHOCDF.quantity + "g";
+    console.log(carbs);
     var calories = "Calories: " + recipeNutr.ENERC_KCAL.quantity + "kcal";
     var fat = "Fat: " + recipeNutr.FAT.quantity + "g";
     var protein = "Protein: " + recipeNutr.PROCNT.quantity + "g";
@@ -189,12 +194,13 @@ $(document).on("click", ".carousel-item", function(){
   $(".nutCard").empty();
   var nut = $("<div>");
   nut.addClass("nutCard");
-  var nutCarb =  $((this)).attr("carbs");
-  var nutCal = $((this)).attr("calories");
-  var nutFat = $((this)).attr("fat");
-  var nutProtein = $((this)).attr("protein");
+  $("#nutritionCard").append(nut);
+  var nutCarb =  $((this)).attr("carbs") + "<br>";
+  var nutCal = $((this)).attr("calories")+ "<br>";
+  var nutFat = $((this)).attr("fat")+ "<br>";
+  var nutProtein = $((this)).attr("protein")+ "<br>";
+  console.log(nutCarb);
 
-  $(".showcase_card").append(nut);
   nut.append(nutCarb).append(nutCal).append(nutFat).append(nutProtein);
 
 
