@@ -27,6 +27,9 @@ var cityName;
 var cityId;
 var lat;
 var lng;
+var nameDisp;
+var urlDisp;
+var imageDisp;
 var x = document.getElementById("map");
 var database = firebase.database();
  
@@ -56,13 +59,13 @@ function showPosition(position) {
 
 //DOCU READY FUNCTION******************************************************
 $(document).ready(function(){
+
   //This function will make a prompt asking the user that the browser wants to know your location
   getLocation(); 
   
 //on click function for submit
 $("#submit").on("click", function(){
   $("#recipes").empty();
-  console.log("clicked");
   //Get input for the food type
   var food = $("#food").val(); 
   //Set the Edamam queryURL
@@ -72,6 +75,7 @@ $("#submit").on("click", function(){
   var queryURL_recipe = "https://api.edamam.com/search?q="+food+"&app_id=f6a7e516&app_key=d2d2590ec9988c392da648e07513249d";
   var queryURL_search = "https://developers.zomato.com/api/v2.1/search?lat="+lat+"&lon="+lng+"&radius=2000&sort=real_distance";
   var queryURL_nutrition = "";
+ 
   
   //Function calls
   getCity();
@@ -79,6 +83,7 @@ $("#submit").on("click", function(){
   ajax_recipe();
   initMap();
 
+  
 
 database.ref().on("value", function(snapshot) {
 });
@@ -138,31 +143,53 @@ function ajax_recipe(){
   //Response handler
  .then(function(response) {
     for(i = 0; i < 20; i++){
+    console.log(response);
     var recipeName = response.hits[i].recipe.label; 
     var recipeURL = response.hits[i].recipe.url;
     var recipeImage = response.hits[i].recipe.image;
     var recipeIngr = response.hits[i].recipe.ingredientLines;
     var recipeNutr= response.hits[i].recipe.totalNutrients;
-
     var num = parseInt(i) + 1;
-    var nameDisp  =  "<a href = "+recipeURL+" target = "+ recipeURL +" >Recipe "+num+": " +recipeName+" </a>";
+
+    var button = $('<button>');
+    button.addClass("recipeLink");
+    button.attr("link", recipeURL);
+    button.attr("image", recipeImage);
+    button.attr("name", nameDisp);
+       
+    nameDisp  = "Recipe " + num + ": " + recipeName;
     console.log(nameDisp);
     console.log("link " + recipeURL);
-    // var urlDisp   = "<p> <a href = '" + recipeURL + "'>";
-    var imageDisp = "<p> <img class = 'recipeImg' src='" + recipeImage + "' alt='" + recipeName + "'>";
-    console.log(response)
+    urlDisp   = "<a href = "+recipeURL+" target = "+ recipeURL +" >"+recipeName+" </a><br>";
+    var imageDisp = "<p> <img class = 'recipeImg' src='" + recipeImage + "' alt='" + recipeName + "'>";   
+    button.text(nameDisp);  
     
-    $("#recipes").append("<br>" + nameDisp);
+    $("#recipes").append(button);
     recipeArr.push(recipeName);
-
     database.ref().set({
       recipeArr: recipeArr      
     })
-
     }
   })
-} 
+}
 });
+
+
+
+
+})
+$(document).on("click", ".recipeLink", function(){
+  console.log($(this));
+  
+  var name = $(this).attr("name");
+  var link = $(this).attr("link");
+  var image = $(this).attr("image");
+
+  
+  console.log(name);
+  $("#recipes").empty();
+  $("#recipes").append("<img id = 'foodImg' src = " + image + " alt = image>");
+  $("#recipes").append("<div id = 'foodURL'>" + link + "</div>");
 })
 
 //MAP INITIALIZING*********************************************************

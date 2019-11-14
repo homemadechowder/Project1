@@ -16,6 +16,7 @@ body {
   background-color: #2f7aeb;
 }
 
+
 .container {
   width: 90%;
   /* height: 100vh; */
@@ -24,6 +25,27 @@ body {
   box-shadow: 0 1rem 2rem .3rem #0000005b;
 }
 #recipes{
+  font-family: 'Lato', sans-serif;
+}
+
+#foodImg{
+  
+  height: 250px;
+  width: 260px;
+}
+
+#foodURL{
+  text-align: left;
+  font-weight: bold;
+
+}
+.recipeLink{
+  text-align: left;
+  color: black;
+}
+
+#recipes{
+  
   text-align: left;
   font-size: 150%;
 }
