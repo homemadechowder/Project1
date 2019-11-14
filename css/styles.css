@@ -59,7 +59,26 @@ body {
 .header__search {
   margin: 3rem 2rem;
   text-align: center;
-  padding: 5px 10px;
+}
+
+.header__search-field {
+  padding: 10px 10px; 
+  width: 50%;
+  border: none;
+  border-radius: 100px;
+  margin: 1rem;
+}
+
+.search-btn {
+  background-color: #2f7aeb;
+  letter-spacing: 2px;
+  font-size: 1.8;
+  font-weight: 700;
+  color: #ffffff;
+  padding: 10px 30px; 
+  border: none;
+  border-radius: 100px;
+  margin: 1rem;
 }
 
 .row {
@@ -99,4 +118,13 @@ body {
 .showcase__card-title {
   text-transform: uppercase;
   letter-spacing: 2px;
+  text-shadow: 0 1rem 2rem .3rem #0000005b;
+}
+
+footer {
+  background-color: #c5c5c5;
+  font-size: 1.6rem;
+  padding: 3rem 0;
+  margin: 2rem auto;
+  text-align: center;
 }
