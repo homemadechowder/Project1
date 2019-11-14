@@ -1,0 +1,102 @@
+/* page reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: 'Lato', sans-serif;
+  /* background-color: #1bdae7; */
+  /* background-color: #ee1eba; */
+  background-color: #2f7aeb;
+}
+
+.container {
+  width: 90%;
+  /* height: 100vh; */
+  margin: 2rem auto; 
+  background-color: #f7f7f7;
+  box-shadow: 0 1rem 2rem .3rem #0000005b;
+}
+
+.header {
+  height: 300rem;
+  height: 40rem;
+  background-image: linear-gradient(to right, #9c9c9c81, #6e6e6e80), url("../images/foodbg8.jpg");
+  /* background-image: linear-gradient(to right, (#9c9c9c81), (#6e6e6e80)), url("../images/foodbg8.jpg"); */
+  background-size: cover;
+  position: top;
+}
+
+.header__img {
+  width: 20rem;
+  text-shadow: 0 1rem 2rem #00000080;
+} 
+
+.header__title {
+  color: #ffffff;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.header__title-h1 {
+  font-size: 5rem;
+  letter-spacing: 1.2rem;
+  text-shadow: 0 1rem 2rem #00000080;
+}
+
+.header__title-h2 {
+  font-size: 2rem;
+  letter-spacing: .9rem;
+  text-shadow: 0 1rem 2rem #00000080;
+}
+
+.header__search {
+  margin: 3rem 2rem;
+  text-align: center;
+  padding: 5px 10px;
+}
+
+.row {
+  width: 100%
+}
+
+.showcase {
+  height: 100%;
+  padding: 3rem;
+  text-align: center;
+}
+
+.showcase__title {
+  font-size: 3rem;
+  text-transform: uppercase;
+  color: #f08c49;
+  text-shadow: 0 1rem 2rem #00000080;
+  letter-spacing: 2px;
+}
+
+.showcase__row {
+  width: 100%;
+  margin: 3rem;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.showcase__card {
+  width: 30rem;
+  height: 40rem;
+  flex-direction: row;
+  box-shadow: 0 1rem 2rem .3rem #0000005b;
+  padding: 2rem;
+  border-radius: 3px;
+}
+
+.showcase__card-title {
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}

@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
-  <title>Document</title>
+  <title>Food Recipes</title>
 </head>
 
 <body>
@@ -25,33 +25,21 @@
               <h1 class="header__title-h1">Healthy Food</h1>
               <h2 class="header__title-h2">is where life happens</h2>
             </div>
-            <div class="header__search">
-              <input class="header__search-field" type="text" placeholder="Food fact search"> <input class="search-btn"
-                type="submit">
-            </div>
           </div>
         </div>
       </div>
     </header>
     <section>
       <div class="showcase">
-        <h3 class="showcase__title">Great food recipes showcase</h3>
-        <div class="showcase__row">
-          <div class="showcase__col">
-            <div class="showcase__card">
-              <h3 class="showcase__card-title">Nutrition Fact</h3>
-            </div>
-          </div>
-          <div class="showcase__col">
-            <div class="showcase__card">
-              <h3 class="showcase__card-title">Receipes</h3>
-            </div>
+        <div class="row">
+          <div class="col">
 
           </div>
-          <div class="showcase__col">
-            <div class="showcase__card">
-              <h3 class="showcase__card-title">Recommendations</h3>
-            </div>
+          <div class="col">
+
+          </div>
+          <div class="col">
+
           </div>
         </div>
       </div>
