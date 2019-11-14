@@ -23,4 +23,4 @@ Create a food recipe APP with ability to connect with 2 major food research APIs
 - In this project our team will use HTML, CSS for all front-end design and development.
 - Javascript for APP logic
 - Two API for food research, and Map.
->>>>>>> 9531aa4ac3239b1a92b809072ffa7fa73ddb0680
+

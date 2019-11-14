@@ -1,3 +1,4 @@
+/* Page Layout******************************************/
 /* page reset */
 * {
   margin: 0;
@@ -29,7 +30,7 @@ body {
 }
 
 #foodImg{
-  
+  border: solid 3px #2f7aeb;
   height: 250px;
   width: 260px;
 }
@@ -37,6 +38,8 @@ body {
 #foodURL{
   text-align: left;
   font-weight: bold;
+  max-width: 260px;
+  word-wrap: break-word;
 
 }
 .recipeLink{
@@ -90,6 +93,36 @@ body {
   text-align: center;
   padding: 5px 10px;
 }
+.header__search-field {
+  padding: 10px 10px; 
+  width: 50%;
+  border: none;
+  border-radius: 100px;
+  margin: 1rem;
+}
+
+.search-btn {
+  background-color: #2f7aeb;
+  letter-spacing: 2px;
+  font-size: 1.8;
+  font-weight: 700;
+  color: #ffffff;
+  padding: 10px 30px; 
+  border: none;
+  border-radius: 100px;
+  margin: 1rem;
+}
+
+.search-btn2 {
+  font-family: 'Lato', sans-serif;
+  font-size: 1.8;
+  font-weight: 700;
+  width: 260px;
+  color: Black;
+  padding: 5px 60px; 
+  border: none;
+  margin: 0.5rem;
+}
 
 .row {
   width: 100%
@@ -128,4 +161,97 @@ body {
 .showcase__card-title {
   text-transform: uppercase;
   letter-spacing: 2px;
+}
+
+footer {
+  background-color: #c5c5c5;
+  font-size: 1.6rem;
+  padding: 3rem 0;
+  margin: 2rem auto;
+  text-align: center;
+}
+
+/* Gallery Portion *************************************/
+
+.slideshow-container {
+  position: relative;
+}
+
+/* Hide the images by default */
+.mySlides {
+  display: none;
+}
+
+/* Add a pointer when hovering over the thumbnail images */
+.cursor {
+  cursor: pointer;
+}
+
+/* Next & previous buttons */
+.prev,
+.next {
+  overflow: auto;
+  cursor: pointer;
+  position: absolute;
+  top: 40%;
+  width: auto;
+  padding: 16px;
+  margin-top: -50px;
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover,
+.next:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* Number text (1/3 etc) */
+.numbertext {
+  color: #f2f2f2;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
+}
+
+/* Container for image text */
+.caption-container {
+  text-align: center;
+  background-color: #222;
+  padding: 2px 16px;
+  color: white;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Six columns side by side */
+.column {
+  float: left;
+  width: 16.66%;
+}
+
+/* Add a transparency effect for thumnbail images */
+.demo {
+  opacity: 0.6;
+}
+
+.active,
+.demo:hover {
+  opacity: 1;
 }

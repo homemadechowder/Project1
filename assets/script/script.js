@@ -88,6 +88,22 @@ $("#submit").on("click", function(){
 database.ref().on("value", function(snapshot) {
 });
 
+function generateSlide(pic){
+  
+  
+  var slide = $("<div>");
+  slide.addClass("carousel-item");
+  
+  var imgSlide = $("<img>");
+  imgSlide.addClass("d-block w-100");
+  imgSlide.attr("src",pic);
+
+  slide.append(imgSlide);
+  $(".carousel-inner").append(slide);
+
+
+}
+
 //AJAX REQUESTS************************************************************
 function getCity(){
   $.ajax({
@@ -147,29 +163,35 @@ function ajax_recipe(){
     var recipeName = response.hits[i].recipe.label; 
     var recipeURL = response.hits[i].recipe.url;
     var recipeImage = response.hits[i].recipe.image;
+    
     var recipeIngr = response.hits[i].recipe.ingredientLines;
     var recipeNutr= response.hits[i].recipe.totalNutrients;
-    var num = parseInt(i) + 1;
+    
 
-    var button = $('<button>');
-    button.addClass("recipeLink");
-    button.attr("link", recipeURL);
-    button.attr("image", recipeImage);
-    button.attr("name", nameDisp);
-       
-    nameDisp  = "Recipe " + num + ": " + recipeName;
+    //Generating a button
+    // var button = $('<button>');
+    // button.addClass("recipeLink");
+    // button.addClass("search-btn2  ")
+    // button.attr("name", recipeName);
+    // button.attr("link", recipeURL);
+    // button.attr("image", recipeImage)
+
+    generateSlide(recipeImage);
+
+       nameDisp  = recipeName;
     console.log(nameDisp);
     console.log("link " + recipeURL);
     urlDisp   = "<a href = "+recipeURL+" target = "+ recipeURL +" >"+recipeName+" </a><br>";
     var imageDisp = "<p> <img class = 'recipeImg' src='" + recipeImage + "' alt='" + recipeName + "'>";   
-    button.text(nameDisp);  
+    // button.text(nameDisp);  
     
-    $("#recipes").append(button);
+    // $("#recipes").append(button);
     recipeArr.push(recipeName);
     database.ref().set({
       recipeArr: recipeArr      
     })
     }
+    
   })
 }
 });
@@ -185,11 +207,15 @@ $(document).on("click", ".recipeLink", function(){
   var link = $(this).attr("link");
   var image = $(this).attr("image");
 
+  var urlLink = "<div><a href = "+ link + " target = "+ link + "></a>";
+  console.log(urlLink);
+
   
   console.log(name);
   $("#recipes").empty();
+  $("#recipes").append("<br><h1>"+name);
   $("#recipes").append("<img id = 'foodImg' src = " + image + " alt = image>");
-  $("#recipes").append("<div id = 'foodURL'>" + link + "</div>");
+  $("#recipes").append("<div id = 'foodURL'><a href = "+ link + " target = "+ link + ">Link</a>");
 })
 
 //MAP INITIALIZING*********************************************************
