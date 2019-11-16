@@ -169,14 +169,14 @@ function ajax_recipe(){
      }
     else{
       
-       carbs = "Carbohydrates: " + recipeNutr.CHOCDF.quantity + "g";
+       carbs = "Carbohydrates: " + Math.round(recipeNutr.CHOCDF.quantity * 100) / 100  + "g";
    }
 
-    
+   Math.round(recipeNutr.ENERC_KCAL.quantity * 100) / 100
 
-    var calories = "Calories: " + recipeNutr.ENERC_KCAL.quantity + "kcal";
-    var fat = "Fat: " + recipeNutr.FAT.quantity + "g";
-    var protein = "Protein: " + recipeNutr.PROCNT.quantity + "g";
+    var calories = "Calories: " + Math.round(recipeNutr.ENERC_KCAL.quantity * 100) / 100 + "kcal";
+    var fat = "Fat: " + Math.round(recipeNutr.FAT.quantity * 100) / 100 + "g";
+    var protein = "Protein: " + Math.round(recipeNutr.PROCNT.quantity * 100) + "g";
 
     
     //Generating a button

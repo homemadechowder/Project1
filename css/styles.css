@@ -172,7 +172,9 @@ footer {
 }
 
 .nutCard{
+  font-family: 'Lato', sans-serif;
   font-size: 150%;
+  text-align: left;
 
 }
 /* Gallery Portion *************************************/
