@@ -55,7 +55,6 @@ function Ingrd(i){
     
   }
 }
-//**************************************************************************
 //Function to get your current location*************************************
 function getLocation() {
     if (navigator.geolocation) {
@@ -165,20 +164,16 @@ function getCity(){
 
 //Main Ajax function call to get recipe information
 function ajax_recipe(){
-  
   $.ajax({
     url: queryURL_recipe,
     method: "GET"
   })
- 
-  //Response handler
- .then(function(response) {
-    
+   //Response handler
+ .then(function(response) { 
     console.log("ajax_recipe is called");
     for(i = 0; i < 20; i++){
     console.log("response get...ok");
-    console.log(response);
-    
+    console.log(response); 
     //Store response into variables for easier access
     var recipeName = response.hits[i].recipe.label;
     var recipeURL = response.hits[i].recipe.url;
@@ -213,12 +208,10 @@ function ajax_recipe(){
     //Call to generate slide
     generateSlide(i, recipeImage, recipeName, recipeURL, carbs, calories, fat, protein); 
     }
-
     //Save response into firebase
     database.ref().set({
       recipe:response  
-      })
-      
+      })  
   
   })
 }

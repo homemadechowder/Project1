@@ -1,7 +1,14 @@
-# Food Recipe Project 
+# FoodApp v1.1 
 
 ## Project Goal
 Create a food recipe APP with ability to connect with 2 major food research APIs, run query and generate report base on user input.
+
+## Link to deployed site
+[FoodApp v1.1](https://homemadechowder.github.io/Project1/)
+
+## Demo GIF
+
+![Demo](../images.FoodApp_Demo.gif)
 
 ## End User Benefits
 1. User will be able to use the website to view and search for information about food nutrition fact.
