@@ -8,7 +8,7 @@ Create a food recipe APP with ability to connect with 2 major food research APIs
 
 ## Demo GIF
 
-![Demo](../images.FoodApp_Demo.gif)
+![Demo](/images/FoodApp_Demo.gif)
 
 ## End User Benefits
 1. User will be able to use the website to view and search for information about food nutrition fact.
