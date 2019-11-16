@@ -23,6 +23,8 @@ firebase.initializeApp(firebaseConfig);
 var restaurantArr = [];
 var itemNameArr = [];
 var recipeArr = [];
+var ingrArr = [];
+var recipeIngr = [];
 var cityName;
 var cityId;
 var lat;
@@ -34,6 +36,35 @@ var x = document.getElementById("map");
 var database = firebase.database();
  
 //**************************************************************************
+
+database.ref().on("value", function(snapshot) {
+
+  if (snapshot.val().recipe){
+
+  ingrArr = snapshot.val().recipe;
+
+
+
+}
+});
+
+function Ingrd(i){
+  
+  
+  
+  var newDiv = $("<div>");
+  newDiv.addClass("ingDiv");
+  
+  ingrd = ingrArr.hits[i].recipe.ingredientLines;
+  console.log(ingrArr.hits[i]);
+
+  for (i = 0; i < ingrd.length; i++){
+    
+    newDiv.append("- " + ingrd[i] + "<br>");
+    $("#ingredCard").append(newDiv);
+    
+  }
+}
 
 //Function to get your current location*************************************
 function getLocation() {
@@ -65,16 +96,21 @@ $(document).ready(function(){
   
 //on click function for submit
 $("#submit").on("click", function(){
-  // $("[flag = '1']").empty();
+  
+  $("[flag = '1']").remove();
+  $("#first").addClass("active");
+
+
   //Get input for the food type
+  
+  
   var food = $("#food").val(); 
   //Set the Edamam queryURL
   // var queryURL = "https://api.edamam.com/api/food-database/parser?ingr="+ food + "&from = 50&category=fast-foods&app_id=f6a7e516&app_key=d2d2590ec9988c392da648e07513249d";
   var queryURL_city = "https://developers.zomato.com/api/v2.1/locations?lat="+lat+"&lon="+lng;
-  var queryURL_food = "https://api.edamam.com/api/food-database/parser?ingr="+food+"&category=fast-foods&app_id=b7d7023b&app_key=3d224105a03de287bc949a76844bdba9	";
   var queryURL_recipe = "https://api.edamam.com/search?q="+food+"&app_id=b7d7023b&app_key=3d224105a03de287bc949a76844bdba9	";
-  var queryURL_search = "https://developers.zomato.com/api/v2.1/search?lat="+lat+"&lon="+lng+"&radius=2000&sort=real_distance";
-  var queryURL_nutrition = "";
+  
+  
  
   
   //Function calls
@@ -82,13 +118,11 @@ $("#submit").on("click", function(){
   //ajax_search();
   ajax_recipe();
   initMap();
-
   
 
-database.ref().on("value", function(snapshot) {
-});
 
-function generateSlide(pic, name, link, carbs, calories, fat, protein){
+
+function generateSlide(i, pic, name, link, carbs, calories, fat, protein){
   
 
   
@@ -97,6 +131,7 @@ function generateSlide(pic, name, link, carbs, calories, fat, protein){
   var slide = $("<div>");
   slide.addClass("carousel-item");
   slide.attr("flag", "1");
+  slide.attr("num", i);
   slide.attr("carbs", carbs);
   slide.attr("calories", calories);
   slide.attr("fat", fat);
@@ -119,6 +154,7 @@ function generateSlide(pic, name, link, carbs, calories, fat, protein){
   caption.append(captionh5).append(captionP);
 
   slide.append(caption);
+  console.log("slide generated");
 
   
 }
@@ -158,9 +194,13 @@ function ajax_recipe(){
     var recipeURL = response.hits[i].recipe.url;
     var recipeImage = response.hits[i].recipe.image;
     
-    var recipeIngr = response.hits[i].recipe.ingredientLines;
+    recipeIngr = response.hits[i].recipe.ingredientLines;
     var recipeNutr = response.hits[i].recipe.totalNutrients;
     var carbs;
+
+    database.ref().set({
+      recipe:response  
+    })
 
     if (typeof recipeNutr.CHOCDF == "undefined"){
        console.log("nocarbs");
@@ -176,18 +216,10 @@ function ajax_recipe(){
 
     var calories = "Calories: " + Math.round(recipeNutr.ENERC_KCAL.quantity * 100) / 100 + "kcal";
     var fat = "Fat: " + Math.round(recipeNutr.FAT.quantity * 100) / 100 + "g";
-    var protein = "Protein: " + Math.round(recipeNutr.PROCNT.quantity * 100) + "g";
+    var protein = "Protein: " + Math.round(recipeNutr.PROCNT.quantity * 100)/100 + "g";
 
     
-    //Generating a button
-    // var button = $('<button>');
-    // button.addClass("recipeLink");
-    // button.addClass("search-btn2  ")
-    // button.attr("name", recipeName);
-    // button.attr("link", recipeURL);
-    // button.attr("image", recipeImage)
-
-    generateSlide(recipeImage, recipeName, recipeURL, carbs, calories, fat, protein); 
+    generateSlide(i, recipeImage, recipeName, recipeURL, carbs, calories, fat, protein); 
 
     
     console.log(recipeIngr);
@@ -196,9 +228,11 @@ function ajax_recipe(){
     
     // $("#recipes").append(button);
     recipeArr.push(recipeName);
-    database.ref().set({
-      recipeArr: recipeArr      
-    })
+
+    
+    
+
+    
     }
 
     
@@ -207,9 +241,12 @@ function ajax_recipe(){
 })
 $("carousel-control-next").trigger('click');
 })
+
 $(document).on("click", ".carousel-item", function(){
   console.log($(this));
   
+  
+  $(".ingDiv").empty();
   $(".nutCard").empty();
   var nut = $("<div>");
   nut.addClass("nutCard");
@@ -218,10 +255,13 @@ $(document).on("click", ".carousel-item", function(){
   var nutCal = $((this)).attr("calories")+ "<br>";
   var nutFat = $((this)).attr("fat")+ "<br>";
   var nutProtein = $((this)).attr("protein")+ "<br>";
+  
   console.log(nutCarb);
 
   nut.append(nutCarb).append(nutCal).append(nutFat).append(nutProtein);
 
+  var num = parseInt($((this)).attr("num"));
+  Ingrd(num);
 
  
   
