@@ -1,29 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    
-    
-    <link rel = "stylesheet" href = "assets/css/style.css">
-    <script src="https://www.gstatic.com/firebasejs/7.3.0/firebase-app.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>    
 
-<!-- TODO: Add SDKs for Firebase products that you want to use
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.3.0/firebase-app.js"></script>
+  <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#available-libraries -->
-<script src="https://www.gstatic.com/firebasejs/7.3.0/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.3.0/firebase-database.js"></script>
     
-    <title>Document</title>
+  <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/styles.css">
+
+  <title>FoodApp v1.1</title>
 </head>
+
 <body>
-    <div>
-        Input food<input type = text id = food>
-        <button id = "submit">Submit </button>
-    </div>
+  <div class="container">
+    <header>
+      <div class="header">
+        <div class="row">
+          <div class="col">
+            <img class="header__img" src="images/HealthyFood.png">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="header__title">
+              <h1 class="header__title-h1">Healthy Food</h1>
+              <h2 class="header__title-h2">is where life happens</h2>
+              <div id = "city"></div>
+            </div>
+            <div class="header__search">
+              <input id = food class="header__search-field" type="text" placeholder="Food fact search"> 
+              <button id = "submit" class = "search-btn">Submit </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <section>
+      <div class="showcase">
+        <h3 class="showcase__title">Great food recipes showcase</h3>
+        <div class="showcase__row">
+          <div class="showcase__col">
+            <div class="showcase__card">
+                <h3 class="showcase__card-title">Recipes</h3>          
+                <div id="carouselControls" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                      <div id = "first" class="carousel-item active">
+                        <img class="d-block w-100" src="images/recipe_here.png" alt="First slide">
+                            <div class = "carousel-caption">
+                                <h5>< Recipe Appears Here ></Recipe></h5>
+                                <p>navigate with arrows</p>
+                            </div>
+                      </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselControls" role="button" data-slide="prev">
+                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                      <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselControls" role="button" data-slide="next">
+                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                      <span class="sr-only">Next</span>
+                    </a>
+                  </div>
+            </div>
+          </div>
+          <div class="showcase__col">
+            <div id = "ingredCard" class="showcase__card">
+              <h3  class="showcase__card-title">Ingredients</h3>            
+            </div> 
+          </div>
+          <div class="showcase__col">
+            <div id = "nutritionCard" class="showcase__card">
+              <h3 class="showcase__card-title">Nutrition Facts</h3>
+              
+            </div>
+          </div>
+        </div>
+        <div class="showcase__row">
+          <div class="showcase__col">
+            <div id = "map" class="showcase__card2">
+              <h3  class="showcase__card-title">Map of Nearby Grocery Stores</h3>   
+              <script id = "mapObj"  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBI7n0cKjaMhAdWPnXVmN8GpuFU5xiDahg&libraries=places" type="text/javascript"></script>         
+            </div> 
+          </div>
+        </div>
 
-    <div id = "map"></div>
-    <script id = "mapObj"  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBI7n0cKjaMhAdWPnXVmN8GpuFU5xiDahg&libraries=places" type="text/javascript"></script>
-    <script src="assets/script/script.js"></script>
+      </div>
+    </section>
+    <section>
 
+
+
+    </section>
+
+    <footer>
+      <p>&copy; Team 3 Project 1</p>
+    </footer>
+
+  </div>
+  <script src="assets/script/script.js"></script>
 </body>
+
 </html>
