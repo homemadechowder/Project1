@@ -136,12 +136,48 @@ $(document).on("click", ".carousel-item", function(){
   //read from attributes to store nutrition items
   //append items on to new div generated
   //number identifier to determine which recipe info it will be using
+ 
   //call ingredient function to post ingredient on another card
 }
 ```
-This is used 
+Once the carousel item is clicked, the nutrition information will be read from attributes, and the ingredients information will be read from firebase through a function Ingrd(num); with num being the numerical identifier for which item in the recipe array as shown above in the Firebase set and snapshot example.
 
+### Google Maps API
 
+The map from google was generated mostly from its documentation online. We created a div to append the map object to, and we used one of google map's library, places, with textSearch and found all nearby grocery stores near the user's location. 
+
+An example snipped is shown below:
+
+```javascript
+function initMap(){
+    //Using the information received from the broswer of your current location, set a location parameter for google maps api
+    var location = new google.maps.LatLng(lat, lng);
+    infowindow = new google.maps.InfoWindow();
+    //Set it so it is centered on your current location
+    map = new google.maps.Map(
+        document.getElementById('map'), {center: location, zoom: 12.5});   
+    //The request specifications for google maps search
+    var request = {
+      location: location,
+      query: 'grocery',
+      fields: ['name','geometry']     
+    };
+     
+    //Initialize places service from Google Maps API
+    var service = new google.maps.places.PlacesService(map);  
+    //Function to request information using .textSearch
+    service.textSearch(request, function(results, status) {
+      console.log(results);
+      if (status === google.maps.places.PlacesServiceStatus.OK) {
+        for (var i = 0; i < results.length; i++) {
+          createMarker(results[i]);;
+        }
+        map.setCenter(results[0].geometry.location);
+      }
+    });
+}
+```
+createMarker was a function created to place a marker based on the location.
 
 ## End User Benefits
 1. User will be able to use the website to view and search for information about food nutrition fact.
@@ -158,9 +194,4 @@ This is used
 * Provide map and direction to the restaurant
 * Membership subscription
 * On going recipe recommendation, food subject blog, and food news...
-
-## Technology Used
-- In this project our team will use HTML, CSS for all front-end design and development.
-- Javascript for APP logic
-- Two API for food research, and Map.
 
