@@ -20,20 +20,15 @@ firebase.initializeApp(firebaseConfig);
 
 
 //INITIAL VARIABLES*********************************************************
-var itemNameArr = [];
-var recipeArr = [];
-var ingrArr = [];
-var recipeIngr = [];
-var cityName;
-var queryURL_city;
-var queryURL_recipe 
-var lat;
-var lng;
-var nameDisp;
-var urlDisp;
-var imageDisp;
-var x = document.getElementById("map");
-var database = firebase.database();
+var ingrArr = []; //Array to store snapshotted ingredients
+var recipeIngr = []; //Array to store ingredients from API
+var cityName; //Auxiliary function that gets cityname
+var queryURL_city; //queryURL for finding city
+var queryURL_recipe  //queryURL for recipe API
+var lat; //variable to store latitude
+var lng; //variable to store longitude
+var x = document.getElementById("map"); //map variable
+var database = firebase.database(); //firebase database initializing
  
 //**************************************************************************
 
