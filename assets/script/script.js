@@ -71,8 +71,8 @@ $("#submit").on("click", function(){
   //Set the Edamam queryURL
   // var queryURL = "https://api.edamam.com/api/food-database/parser?ingr="+ food + "&from = 50&category=fast-foods&app_id=f6a7e516&app_key=d2d2590ec9988c392da648e07513249d";
   var queryURL_city = "https://developers.zomato.com/api/v2.1/locations?lat="+lat+"&lon="+lng;
-  var queryURL_food = "https://api.edamam.com/api/food-database/parser?ingr="+food+"&category=fast-foods&app_id=f6a7e516&app_key=d2d2590ec9988c392da648e07513249d";
-  var queryURL_recipe = "https://api.edamam.com/search?q="+food+"&app_id=f6a7e516&app_key=d2d2590ec9988c392da648e07513249d";
+  var queryURL_food = "https://api.edamam.com/api/food-database/parser?ingr="+food+"&category=fast-foods&app_id=b7d7023b&app_key=3d224105a03de287bc949a76844bdba9	";
+  var queryURL_recipe = "https://api.edamam.com/search?q="+food+"&app_id=b7d7023b&app_key=3d224105a03de287bc949a76844bdba9	";
   var queryURL_search = "https://developers.zomato.com/api/v2.1/search?lat="+lat+"&lon="+lng+"&radius=2000&sort=real_distance";
   var queryURL_nutrition = "";
  
@@ -88,15 +88,16 @@ $("#submit").on("click", function(){
 database.ref().on("value", function(snapshot) {
 });
 
-function generateSlide(pic, name, link, calories, fat, protein){
- 
+function generateSlide(pic, name, link, carbs, calories, fat, protein){
+  
+
   
   // $(".carousel-inner").append("<div class = 'carousel-item active'>").append()
 
   var slide = $("<div>");
   slide.addClass("carousel-item");
   slide.attr("flag", "1");
-  // slide.attr("carbs", carbs);
+  slide.attr("carbs", carbs);
   slide.attr("calories", calories);
   slide.attr("fat", fat);
   slide.attr("protein", protein);
@@ -118,6 +119,8 @@ function generateSlide(pic, name, link, calories, fat, protein){
   caption.append(captionh5).append(captionP);
 
   slide.append(caption);
+
+  
 }
 
 //AJAX REQUESTS************************************************************
@@ -159,17 +162,17 @@ function ajax_recipe(){
     var recipeNutr = response.hits[i].recipe.totalNutrients;
     var carbs;
 
-    // if (recipeNutr.CHOCDF == "undefined"){
-    //   console.log("nocarbs");
-    //   carbs = "No Carbs";
-    // console.log(carbs);
-    // }
-    // else{
+    if (typeof recipeNutr.CHOCDF == "undefined"){
+       console.log("nocarbs");
+       carbs = "No Carbs";
+    console.log(carbs);
+     }
+    else{
       
-    //   carbs = "Carbohydrates: " + recipeNutr.CHOCDF.quantity + "g";
-    // }
+       carbs = "Carbohydrates: " + recipeNutr.CHOCDF.quantity + "g";
+   }
 
-    // console.log(recipeNutr.CHOCDF);
+    
 
     var calories = "Calories: " + recipeNutr.ENERC_KCAL.quantity + "kcal";
     var fat = "Fat: " + recipeNutr.FAT.quantity + "g";
@@ -184,7 +187,9 @@ function ajax_recipe(){
     // button.attr("link", recipeURL);
     // button.attr("image", recipeImage)
 
-    generateSlide(recipeImage, recipeName, recipeURL, calories, fat, protein); 
+    generateSlide(recipeImage, recipeName, recipeURL, carbs, calories, fat, protein); 
+
+    
     console.log(recipeIngr);
     console.log(recipeNutr);
     // button.text(nameDisp);  
@@ -195,10 +200,12 @@ function ajax_recipe(){
       recipeArr: recipeArr      
     })
     }
+
     
   })
 }
 })
+$("carousel-control-next").trigger('click');
 })
 $(document).on("click", ".carousel-item", function(){
   console.log($(this));
