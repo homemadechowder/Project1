@@ -118,11 +118,11 @@ function generateSlide(i, pic, name, link, carbs, calories, fat, protein){
   }
 ```
 ##### Variable explanation:
-i - The identifier for which number of the recipe is from the recipe array stored from the response
-pic - Taking in the image URL from the response and outputting it in a div in the slides
-name - Taking in the name of the item to display on the carousel captions
-link - Taking in the link of the recipe to display on the carousel sub-captions
-carbs, calories, fat, protein - Taking the nutrition value to store them into attributes
+ - i - The identifier for which number of the recipe is from the recipe array stored from the response
+ - pic - Taking in the image URL from the response and outputting it in a div in the slides
+ - name - Taking in the name of the item to display on the carousel captions
+ - link - Taking in the link of the recipe to display on the carousel sub-captions
+ - carbs, calories, fat, protein - Taking the nutrition value to store them into attributes
 
 
 ### Outputting data onto the ingredient cards based on an onclick function
