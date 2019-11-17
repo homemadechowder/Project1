@@ -181,7 +181,7 @@ createMarker was a function created to place a marker based on the location.
 
 ## End User Benefits
 1. User will be able to use the website to view and search for information about food nutrition fact.
-2. User can enter the food they like to each and get the report about the food that they are interested.
+2. User can enter the food they like to eat and get the report about the food that they are interested.
 3. User can get food nutrial information, receip, restaurant recommendation, how to cood videos..
 4. User might be able to get direction to restaurance, market, or food services agency
 
@@ -195,3 +195,18 @@ createMarker was a function created to place a marker based on the location.
 * Membership subscription
 * On going recipe recommendation, food subject blog, and food news...
 
+## UI/UX Design 
+
+### Technology Used
+* UI/UX design - XD Design Phototype and Sharing
+* HTML5 / CCC Flex/Grid for advance layout concept
+
+### Wireframe
+### Front Page
+![](images/foodbg1.jpg)
+
+### Showcase cards
+![](images/foodbg2.jpg)
+
+### Map View
+![](images/foodbg3.jpg)
